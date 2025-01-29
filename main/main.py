@@ -41,12 +41,13 @@ def readFile(file1: str, file2: str, file3: str):
 
 def visualize_data():
     # create instance of dash class
-    app = Dash()
+    app = Dash(__name__)
 
     # create data frame from existing csv file
     frame = pd.read_csv("outputs/merged_daily_sales_data.csv")
+    frame = frame.sort_values(by="date")  # sort data by date
 
-    # figure of graph
+    # figure of graph - line
     fig = px.line(
         frame,
         x="date",
