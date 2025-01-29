@@ -1,3 +1,5 @@
+from dash import html, dcc, Dash  # import dash to visualize web application
+import plotly.express as px  # import plotly to create graph
 import pandas as pd
 
 
@@ -34,15 +36,43 @@ def readFile(file1: str, file2: str, file3: str):
     new_df = filter_df.copy()
 
     # write to csv file
-    new_df.to_csv("outputs/merged_daily_sales_data.csv")
+    new_df.to_csv("outputs/merged_daily_sales_data.csv", index=False)
+
+
+def visualize_data():
+    # create instance of dash class
+    app = Dash()
+
+    # create data frame from existing csv file
+    frame = pd.read_csv("outputs/merged_daily_sales_data.csv")
+
+    # figure of graph
+    fig = px.line(
+        frame,
+        x="date",
+        y="sales",
+        color="region",
+    )
+
+    # layout of the app
+    app.layout = html.Div(
+        children=[
+            html.H1(children="Sales data visualization in dash"),
+            html.Div(
+                children="""
+        Sales before and after the Pink Morsel price increase."
+        """
+            ),
+            dcc.Graph(id="sales-graph", figure=fig),
+        ]
+    )
+
+    # runserver
+    app.run(debug=True)
 
 
 def main():
-    readFile(
-        "data/daily_sales_data_0.csv",
-        "data/daily_sales_data_1.csv",
-        "data/daily_sales_data_2.csv",
-    )
+    visualize_data()
 
 
 if __name__ == "__main__":
