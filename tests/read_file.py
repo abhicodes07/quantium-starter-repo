@@ -54,11 +54,13 @@ def readFilePandas(file):
     # index_col : use a specific column as index
     # parse_dates : read data as a date
     frame = pd.read_csv(file, delimiter=",", index_col="product")
-    print(frame.ix[frame.ix != "pink morsel"])
+    regions = ["north"]
+    mask = frame.region.isin(regions)
+    print(mask)
 
 
 def main():
-    readFilePandas("data/daily_sales_data_0.csv")
+    readFilePandas("outputs/merged_daily_sales_data.csv")
 
 
 if __name__ == "__main__":
