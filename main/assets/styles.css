@@ -3,3 +3,12 @@ h1 {
   padding-left: 5px;
   text-align: center;
 }
+
+h3 {
+  color: #15616d;
+}
+
+body {
+  background-color: #001524;
+  font-family: monospace;
+}
